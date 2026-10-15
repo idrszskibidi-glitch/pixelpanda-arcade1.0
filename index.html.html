@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PixelPanda — Dunia Game Kartun</title>
+<style>
+:root{--ink:#24304a;--pink:#ff76ad;--yellow:#ffd85e;--blue:#77d9f5;--purple:#a995ff;--green:#91e7b0}
+*{box-sizing:border-box}body{margin:0;font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif;color:var(--ink);background:#bcecff;min-height:100vh}
+body:before{content:"";position:fixed;inset:0;z-index:-2;background:linear-gradient(180deg,#8fe0ff 0%,#d7f6ff 60%,#a4edbd 60%,#75d99e 100%)}
+body:after{content:"☁️　　　☁️　　　　 ☁️　　　☁️";position:fixed;top:5%;left:0;width:100%;font-size:clamp(24px,4vw,55px);letter-spacing:2vw;opacity:.75;z-index:-1;pointer-events:none;white-space:nowrap;overflow:hidden}
+.cloud{position:fixed;bottom:-45px;width:220px;height:100px;background:#fff;border-radius:80px;opacity:.35;z-index:-1}.cloud:before,.cloud:after{content:"";position:absolute;background:inherit;border-radius:50%;width:100px;height:100px;top:-40px;left:25px}.cloud:after{left:95px;top:-25px;width:80px;height:80px}
+.wrap{max-width:1180px;margin:auto;padding:22px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;background:#ffffffd9;border:3px solid white;border-radius:22px;padding:12px 18px;box-shadow:0 7px 0 #24304a15}
+.logo{font-size:1.5rem;font-weight:1000;letter-spacing:-1px}.logo span{color:#ff5598}.pill{background:#fff0a8;border-radius:99px;padding:8px 13px;font-weight:800}
+.hero{margin:24px 0 20px;display:grid;grid-template-columns:1.4fr .6fr;gap:20px;align-items:center;background:#fff;border:4px solid white;border-radius:30px;padding:clamp(22px,4vw,42px);box-shadow:0 10px 0 #24304a12;overflow:hidden}
+.hero h1{font-size:clamp(2.2rem,5vw,4rem);line-height:1;margin:0 0 14px;letter-spacing:-2px}.hero h1 em{font-style:normal;color:#ff5598}.hero p{font-size:1.05rem;max-width:560px;line-height:1.6}.mascot{font-size:clamp(90px,15vw,160px);text-align:center;filter:drop-shadow(0 8px 0 #24304a12);transform:rotate(5deg)}
+.btn{border:0;border-radius:14px;background:var(--pink);color:#fff;font-weight:900;font-size:1rem;padding:12px 18px;cursor:pointer;box-shadow:0 4px 0 #d94b85;transition:transform .12s}.btn:hover{transform:translateY(-2px)}.btn.secondary{background:#7e69ed;box-shadow:0 4px 0 #5945bf}
+.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:20px 0}.search{flex:1;min-width:200px;padding:13px 16px;border:3px solid #fff;border-radius:15px;font:inherit;box-shadow:0 4px 0 #24304a10;outline-color:var(--purple)}.filters{display:flex;gap:8px;flex-wrap:wrap}.filter{border:2px solid #fff;background:#ffffffc9;border-radius:99px;padding:9px 13px;font-weight:800;cursor:pointer;color:var(--ink)}.filter.active{background:var(--yellow);border-color:#fff}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:10px;flex-wrap:wrap;margin:24px 0 14px}.section-head h2{margin:0;font-size:1.7rem}.muted{color:#53627e}
+.games{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}.game{background:#ffffffed;border:3px solid #fff;border-radius:22px;padding:13px;box-shadow:0 6px 0 #24304a10;transition:transform .15s}.game:hover{transform:translateY(-4px) rotate(-.5deg)}.thumb{height:112px;border-radius:15px;display:grid;place-items:center;font-size:54px;position:relative;overflow:hidden}.thumb:after{content:"";position:absolute;width:140%;height:22px;background:#ffffff44;transform:rotate(-25deg);top:25px;left:-20px}.game h3{font-size:1rem;margin:12px 0 4px}.game p{font-size:.83rem;margin:0 0 12px;color:#66718a}.game .btn{width:100%;padding:10px;font-size:.9rem}.tag{font-size:.72rem;font-weight:900;border-radius:7px;background:#f0edff;padding:4px 7px;display:inline-block;margin-bottom:7px}
+footer{text-align:center;padding:32px 10px;color:#43516b;font-size:.9rem}
+.modal{position:fixed;inset:0;background:#17213bc9;display:none;place-items:center;padding:18px;z-index:5}.modal.show{display:grid}.panel{background:#fff;border:4px solid white;border-radius:25px;max-width:500px;width:100%;padding:24px;text-align:center;box-shadow:0 12px 0 #0002}.panel h2{margin:0 0 8px}.target{font-size:64px;border:0;border-radius:20px;background:#fff1a8;padding:12px 28px;cursor:pointer;margin:14px}.close{float:right;background:#eee;border:0;border-radius:50%;width:34px;height:34px;font-size:18px;cursor:pointer}.login{position:fixed;inset:0;background:linear-gradient(140deg,#89dfff,#c6b8ff 55%,#ffc6df);z-index:10;display:grid;place-items:center;padding:20px}.login.hidden{display:none}.login-card{max-width:410px;width:100%;padding:30px;background:#ffffffef;border:4px solid white;border-radius:30px;box-shadow:0 12px 0 #24304a17;text-align:center}.login-card .mascot{font-size:75px}.login-card h1{margin:5px 0;font-size:2rem}.login-card p{color:#63708a;line-height:1.5}.login-card input{width:100%;padding:13px;border:2px solid #dfe5f3;border-radius:13px;margin:7px 0;font:inherit}.login-card .btn{width:100%;margin-top:9px}.small{font-size:.78rem;color:#6c7890}
+@media(max-width:900px){.games{grid-template-columns:repeat(3,minmax(0,1fr))}.hero{grid-template-columns:1fr .45fr}}
+@media(max-width:620px){.wrap{padding:12px}.games{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.hero{grid-template-columns:1fr}.mascot{font-size:85px}.hero h1{letter-spacing:-1px}.thumb{height:90px;font-size:45px}.game{padding:9px}}
+
+/* Fitur hadiah, check-in, dan marketplace */
+.feature-panel{background:#ffffffed;border:3px solid #fff;border-radius:24px;padding:20px;box-shadow:0 6px 0 #24304a10;margin:22px 0}
+.feature-panel h2{margin:0 0 8px}.reward-grid,.market-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:15px}
+.reward,.market-item{background:#f7f8ff;border:2px solid #e7e9ff;border-radius:17px;padding:14px;text-align:center}
+.reward .emoji{font-size:42px}.reward h3,.market-item h3{margin:7px 0 5px;font-size:1rem}.reward p,.market-item p{font-size:.85rem;color:#66718a;margin:4px 0 10px}
+.coins{display:inline-block;background:#fff0a8;border-radius:99px;padding:7px 12px;font-weight:900}
+.checkin-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;margin:15px 0}
+.day{background:#eef2ff;border-radius:12px;text-align:center;padding:9px 3px;font-size:.8rem;font-weight:800}.day.done{background:#bff3d1;border:2px solid #64c88b}
+.market-note{font-size:.88rem;line-height:1.5;background:#fff4ce;border-radius:12px;padding:12px;color:#68551c}
+@media(max-width:850px){.reward-grid,.market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:430px){.reward-grid,.market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.checkin-days{gap:4px}.day{font-size:.72rem;padding:8px 1px}}
+
+</style></head>
+<body>
+<div class="cloud" style="left:5%"></div><div class="cloud" style="right:8%;bottom:8%"></div>
+<div class="login" id="login">
+  <div class="login-card"><div class="mascot">🐼🎮</div><h1>Pixel<span style="color:#ff5598">Panda</span></h1><p>Masuk ke dunia penuh warna dan pilih game favoritmu!</p>
+    <form id="loginForm"><input id="playerName" maxlength="20" placeholder="Nama panggilan kamu" autocomplete="nickname" required><input id="playerPin" type="password" placeholder="Kata sandi demo (bebas)" required><button class="btn" type="submit">Masuk ke Dunia Game ✨</button></form>
+    <p class="small">Demo saja: nama dan kata sandi tidak dikirim atau disimpan ke server.</p>
+  </div>
+</div>
+<div class="wrap">
+<header class="topbar"><div class="logo">🐼 Pixel<span>Panda</span></div><div class="pill">⭐ Arena Game Kartun</div><div>Halo, <strong id="hello">Pemain</strong>! <button class="btn secondary" id="logout" style="padding:8px 12px;font-size:.85rem">Keluar</button></div></header>
+<section class="hero"><div><div class="pill" style="display:inline-block;margin-bottom:16px">🎉 48 GAME MENUNGGU!</div><h1>Waktunya <em>main</em><br>dan bersenang-senang!</h1><p>Jelajahi arcade kartun dengan warna ceria, karakter lucu, dan mini-game sederhana. Cari game yang kamu suka lalu mulai bermain.</p><button class="btn" onclick="document.getElementById('gameGrid').scrollIntoView({behavior:'smooth'})">Jelajahi Game ↓</button></div><div class="mascot" aria-label="Maskot panda">🐼</div></section>
+<div class="section-head"><div><h2>🎮 Papan Game</h2><div class="muted">Pilih petualanganmu hari ini.</div></div><div class="pill" id="count">48 game</div></div>
+<div class="controls"><input class="search" id="search" placeholder="🔎 Cari game..." aria-label="Cari game"><div class="filters" id="filters"><button class="filter active" data-cat="Semua">Semua</button><button class="filter" data-cat="Arcade">Arcade</button><button class="filter" data-cat="Puzzle">Puzzle</button><button class="filter" data-cat="Petualangan">Petualangan</button><button class="filter" data-cat="Santai">Santai</button></div></div>
+<div class="games" id="gameGrid"></div>
+
+<section class="feature-panel" id="rewards">
+  <div class="section-head" style="margin-top:0">
+    <div><h2>🎁 Toko Hadiah Kartun</h2><div class="muted">Kumpulkan koin dari check-in lalu tukarkan dengan hadiah virtual.</div></div>
+    <div class="coins">🪙 Koin: <span id="coinBalance">0</span></div>
+  </div>
+  <div class="reward-grid" id="rewardGrid">
+    <article class="reward"><div class="emoji">🧸</div><h3>Boneka Beruang</h3><p>Hadiah virtual yang menggemaskan.</p><button class="btn" data-reward="bear" data-cost="30">Tukar 30 🪙</button></article>
+    <article class="reward"><div class="emoji">🐱</div><h3>Boneka Kucing</h3><p>Teman kecil untuk koleksimu.</p><button class="btn" data-reward="cat" data-cost="25">Tukar 25 🪙</button></article>
+    <article class="reward"><div class="emoji">🐰</div><h3>Boneka Kelinci</h3><p>Si kelinci lembut.</p><button class="btn" data-reward="bunny" data-cost="20">Tukar 20 🪙</button></article>
+    <article class="reward"><div class="emoji">🐼</div><h3>Boneka Panda</h3><p>Maskot PixelPanda.</p><button class="btn" data-reward="panda" data-cost="35">Tukar 35 🪙</button></article>
+    <article class="reward"><div class="emoji">🦊</div><h3>Boneka Rubah</h3><p>Rubah kecil yang ceria.</p><button class="btn" data-reward="fox" data-cost="25">Tukar 25 🪙</button></article>
+    <article class="reward"><div class="emoji">🐸</div><h3>Boneka Katak</h3><p>Koleksi hijau yang lucu.</p><button class="btn" data-reward="frog" data-cost="20">Tukar 20 🪙</button></article>
+    <article class="reward"><div class="emoji">🦄</div><h3>Boneka Unicorn</h3><p>Hadiah fantasi berkilau.</p><button class="btn" data-reward="unicorn" data-cost="40">Tukar 40 🪙</button></article>
+    <article class="reward"><div class="emoji">🐧</div><h3>Boneka Penguin</h3><p>Si kecil dari negeri es.</p><button class="btn" data-reward="penguin" data-cost="25">Tukar 25 🪙</button></article>
+  </div>
+  <h3>🎒 Koleksi hadiahmu</h3><p id="collection" class="muted">Belum ada hadiah. Tukarkan koin untuk mulai mengoleksi!</p>
+</section>
+
+<section class="feature-panel" id="daily">
+  <div class="section-head" style="margin-top:0">
+    <div><h2>📅 Check-in Harian</h2><div class="muted">Datang setiap hari untuk mengumpulkan koin bonus.</div></div>
+    <div class="pill">Hari ke-<span id="streak">0</span></div>
+  </div>
+  <div class="checkin-days" id="checkinDays">
+    <div class="day">Hari 1<br>+5 🪙</div><div class="day">Hari 2<br>+5 🪙</div><div class="day">Hari 3<br>+10 🪙</div><div class="day">Hari 4<br>+10 🪙</div><div class="day">Hari 5<br>+15 🪙</div><div class="day">Hari 6<br>+15 🪙</div><div class="day">Hari 7<br>+25 🪙</div>
+  </div>
+  <button class="btn" id="checkinBtn">Check-in hari ini 🎉</button>
+  <span id="checkinStatus" class="muted" style="margin-left:10px"></span>
+</section>
+
+<section class="feature-panel" id="marketplace">
+  <div class="section-head" style="margin-top:0">
+    <div><h2>🛍️ Marketplace Game</h2><div class="muted">Contoh katalog untuk Mobile Legends, Free Fire, dan Roblox.</div></div>
+    <div class="pill">Katalog demo</div>
+  </div>
+  <p class="market-note">⚠️ Ini hanya contoh tampilan katalog, bukan toko aktif dan tidak memproses pembayaran. Jual-beli akun bisa melanggar aturan layanan game serta berisiko penipuan atau kehilangan akun. Gunakan hanya penawaran resmi yang diizinkan platform; jangan bagikan kata sandi, kode OTP, atau data pribadi.</p>
+  <div class="market-grid">
+    <article class="market-item"><div class="emoji" style="font-size:42px">⚔️</div><h3>Mobile Legends</h3><p>Katalog item dan merchandise resmi.</p><span class="tag">MLBB</span><br><button class="btn secondary market-info" data-game="Mobile Legends">Lihat info</button></article>
+    <article class="market-item"><div class="emoji" style="font-size:42px">🔥</div><h3>Free Fire</h3><p>Katalog voucher/top-up dari kanal resmi.</p><span class="tag">FF</span><br><button class="btn secondary market-info" data-game="Free Fire">Lihat info</button></article>
+    <article class="market-item"><div class="emoji" style="font-size:42px">🧱</div><h3>Roblox</h3><p>Katalog Robux dan item melalui kanal resmi.</p><span class="tag">Roblox</span><br><button class="btn secondary market-info" data-game="Roblox">Lihat info</button></article>
+    <article class="market-item"><div class="emoji" style="font-size:42px">🎁</div><h3>Voucher Game</h3><p>Hadiah digital dan kartu top-up.</p><span class="tag">Voucher</span><br><button class="btn secondary market-info" data-game="Voucher Game">Lihat info</button></article>
+  </div>
+  <p class="small">Tombol katalog menampilkan pengingat keamanan. Tambahkan pembayaran atau produk sungguhan hanya setelah menyiapkan penjual tepercaya, kebijakan, dan perlindungan pembeli.</p>
+</section>
+
+<footer>🌈 Dibuat untuk bersenang-senang • PixelPanda Arcade<br><span class="small">Game demo berjalan di browser ini. Login hanya tampilan demo, bukan akun sungguhan.</span></footer>
+</div>
+<div class="modal" id="modal"><div class="panel"><button class="close" id="close" aria-label="Tutup">×</button><div style="font-size:52px">🌟</div><h2 id="gameTitle">Mini Game</h2><p id="gameDesc">Klik bintang sebanyak mungkin sebelum waktunya habis!</p><div class="pill">Skor: <span id="score">0</span> · Waktu: <span id="time">15</span> detik</div><div><button class="target" id="target" aria-label="Klik bintang">⭐</button></div><button class="btn secondary" id="start">Mulai / Ulangi</button><p class="small">Tip: tekan bintang untuk mengumpulkan skor.</p></div></div>
+<script>
+const games=[
+["⭐","Star Catcher","Arcade"],["🧩","Puzzle Pop","Puzzle"],["🐉","Dragon Quest","Petualangan"],["🐱","Kitty Cafe","Santai"],
+["🚀","Space Dash","Arcade"],["🧠","Memory Match","Puzzle"],["🏝️","Island Explorer","Petualangan"],["🌱","Tiny Garden","Santai"],
+["🍭","Candy Bounce","Arcade"],["🔷","Shape Shift","Puzzle"],["🗺️","Jungle Journey","Petualangan"],["🐠","Aqua World","Santai"],
+["⚡","Neon Runner","Arcade"],["🔢","Number Ninja","Puzzle"],["🏰","Castle Quest","Petualangan"],["🧸","Teddy Time","Santai"],
+["🍉","Fruit Frenzy","Arcade"],["🧩","Jigsaw Joy","Puzzle"],["🦊","Fox Forest","Petualangan"],["🎨","Color Studio","Santai"],
+["🏓","Paddle Party","Arcade"],["🔍","Find It!","Puzzle"],["🧙","Magic Academy","Petualangan"],["🐼","Panda Picnic","Santai"],
+["💎","Gem Rush","Arcade"],["🔤","Word Wizard","Puzzle"],["🤖","Robot Rescue","Petualangan"],["☁️","Cloud Hopper","Santai"],
+["🏀","Basket Blast","Arcade"],["🌀","Maze Mania","Puzzle"],["🦖","Dino Island","Petualangan"],["🍰","Cake Maker","Santai"],
+["🎯","Target Tap","Arcade"],["🧮","Math Quest","Puzzle"],["🏴‍☠️","Pirate Cove","Petualangan"],["🐹","Hamster Home","Santai"],
+["🛹","Skate Sprint","Arcade"],["♟️","Brain Board","Puzzle"],["🧚","Fairy Valley","Petualangan"],["🎵","Beat Buddy","Santai"],
+["🪁","Kite Flyer","Arcade"],["🔐","Code Cracker","Puzzle"],["🌋","Volcano Run","Petualangan"],["🐸","Frog Pond","Santai"],
+["🛸","Alien Boop","Arcade"],["🧊","Ice Blocks","Puzzle"],["🌌","Galaxy Trail","Petualangan"],["🦋","Butterfly Park","Santai"]
+];
+const colors=["#ffd9e9","#d9f5ff","#e6e0ff","#fff0b9","#d6f8dc","#ffe0cc"];
+const grid=document.getElementById('gameGrid');let category='Semua',currentGame='',score=0,remaining=15,timer=null;
+function render(){let q=document.getElementById('search').value.toLowerCase();let shown=games.filter(g=>(category==='Semua'||g[2]===category)&&g[1].toLowerCase().includes(q));grid.innerHTML='';shown.forEach((g,i)=>{let original=games.indexOf(g);let card=document.createElement('article');card.className='game';card.innerHTML=`<div class="thumb" style="background:${colors[original%colors.length]}">${g[0]}</div><span class="tag">${g[2]}</span><h3>${g[1]}</h3><p>Mini-game seru untuk dicoba.</p><button class="btn" data-index="${original}">Mainkan ▶</button>`;grid.appendChild(card)});document.getElementById('count').textContent=shown.length+' game';grid.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>openGame(games[+b.dataset.index])))}
+document.getElementById('search').addEventListener('input',render);
+document.getElementById('filters').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{category=b.dataset.cat;document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('active',x===b));render()}));
+document.getElementById('loginForm').addEventListener('submit',e=>{e.preventDefault();const n=document.getElementById('playerName').value.trim();if(!n)return;document.getElementById('hello').textContent=n;document.getElementById('login').classList.add('hidden')});
+document.getElementById('logout').addEventListener('click',()=>{stopTimer();document.getElementById('login').classList.remove('hidden')});
+function openGame(g){currentGame=g[1];document.getElementById('gameTitle').textContent=g[0]+' '+g[1];document.getElementById('gameDesc').textContent='Klik bintang sebanyak mungkin dalam 15 detik! Ini mini-game demo untuk '+g[1]+'.';document.getElementById('modal').classList.add('show');resetGame()}
+function resetGame(){stopTimer();score=0;remaining=15;update();document.getElementById('start').disabled=false;document.getElementById('target').disabled=true;document.getElementById('target').style.opacity='.5'}
+function update(){document.getElementById('score').textContent=score;document.getElementById('time').textContent=remaining}
+function stopTimer(){if(timer){clearInterval(timer);timer=null}}
+document.getElementById('start').addEventListener('click',()=>{stopTimer();score=0;remaining=15;update();document.getElementById('target').disabled=false;document.getElementById('target').style.opacity='1';document.getElementById('start').disabled=true;timer=setInterval(()=>{remaining--;update();if(remaining<=0){stopTimer();document.getElementById('target').disabled=true;document.getElementById('target').style.opacity='.5';document.getElementById('start').disabled=false;document.getElementById('gameDesc').textContent='Waktu habis! Skor kamu: '+score+'. Tekan Mulai / Ulangi untuk bermain lagi.'}},1000)});
+document.getElementById('target').addEventListener('click',()=>{if(!timer)return;score++;update();const emojis=['⭐','🌟','💎','🍭','✨'];document.getElementById('target').textContent=emojis[Math.floor(Math.random()*emojis.length)]});
+function closeModal(){stopTimer();document.getElementById('modal').classList.remove('show')}
+document.getElementById('close').addEventListener('click',closeModal);document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+render();
+
+// Check-in dan hadiah disimpan lokal pada browser perangkat ini.
+const STORE_KEY='pixelpanda_demo_v1';
+function loadStore(){try{return JSON.parse(localStorage.getItem(STORE_KEY))||{coins:0,claimedDate:'',streak:0,lastDate:'',collection:[]}}catch(e){return {coins:0,claimedDate:'',streak:0,lastDate:'',collection:[]}}}
+let store=loadStore();
+function saveStore(){try{localStorage.setItem(STORE_KEY,JSON.stringify(store))}catch(e){};renderStore()}
+function dateKey(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function renderStore(){
+ document.getElementById('coinBalance').textContent=store.coins;
+ document.getElementById('streak').textContent=store.streak||0;
+ const today=dateKey(),done=store.claimedDate===today;
+ document.getElementById('checkinBtn').disabled=done;
+ document.getElementById('checkinBtn').textContent=done?'Sudah check-in hari ini ✓':'Check-in hari ini 🎉';
+ document.getElementById('checkinStatus').textContent=done?'Bonus harian sudah diklaim.':'Klaim bonusmu sekarang!';
+ document.querySelectorAll('#checkinDays .day').forEach((el,i)=>el.classList.toggle('done',i<(store.streak||0)%7 || (store.streak>0 && store.streak%7===0)));
+ const names={bear:'🧸 Boneka Beruang',cat:'🐱 Boneka Kucing',bunny:'🐰 Boneka Kelinci',panda:'🐼 Boneka Panda',fox:'🦊 Boneka Rubah',frog:'🐸 Boneka Katak',unicorn:'🦄 Boneka Unicorn',penguin:'🐧 Boneka Penguin'};
+ document.getElementById('collection').textContent=store.collection.length?store.collection.map(x=>names[x]||x).join(' · '):'Belum ada hadiah. Tukarkan koin untuk mulai mengoleksi!';
+ document.querySelectorAll('[data-reward]').forEach(b=>{b.disabled=store.collection.includes(b.dataset.reward);b.textContent=b.disabled?'Sudah dimiliki ✓':'Tukar '+b.dataset.cost+' 🪙'});
+}
+document.getElementById('checkinBtn').addEventListener('click',()=>{
+ const today=dateKey();if(store.claimedDate===today)return;
+ const yesterday=new Date();yesterday.setDate(yesterday.getDate()-1);const y=yesterday.getFullYear()+'-'+String(yesterday.getMonth()+1).padStart(2,'0')+'-'+String(yesterday.getDate()).padStart(2,'0');
+ store.streak=store.lastDate===y?(store.streak%7)+1:1;
+ const rewards=[5,5,10,10,15,15,25],bonus=rewards[(store.streak-1)%7];
+ store.coins+=bonus;store.claimedDate=today;store.lastDate=today;saveStore();
+ document.getElementById('checkinStatus').textContent='Berhasil! Kamu mendapat '+bonus+' koin 🪙';
+});
+document.querySelectorAll('[data-reward]').forEach(b=>b.addEventListener('click',()=>{
+ const id=b.dataset.reward,cost=Number(b.dataset.cost);if(store.collection.includes(id))return;
+ if(store.coins<cost){alert('Koin belum cukup. Check-in harian untuk mendapatkan koin!');return}
+ store.coins-=cost;store.collection.push(id);saveStore();alert('Berhasil menambahkan hadiah virtual ke koleksi! 🎉');
+}));
+document.querySelectorAll('.market-info').forEach(b=>b.addEventListener('click',()=>{
+ const game=b.dataset.game;alert(game+': ini katalog demo. Gunakan toko atau kanal resmi yang diizinkan. Jangan membeli akun dari penjual tak dikenal atau membagikan kata sandi/OTP.');
+}));
+renderStore();
+
+</script>
+</body></html>
